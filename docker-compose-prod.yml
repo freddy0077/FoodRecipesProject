@@ -1,0 +1,65 @@
+version: '3.5'
+
+services:
+
+    frontend:
+      build: ./recipes-frontend
+      ports:
+        - '80:80'
+      networks:
+        - recipes_network
+
+    gateway:
+      image: ${COMPOSE_PROJECT_NAME}_laravel:latest
+      build:
+        context: ./recipes-service-api
+        args:
+          - "BUILD_ARGUMENT_ENV=prod"
+          - "BUILD_ARGUMENT_DEBUG_ENABLED=true"
+        dockerfile: ./Dockerfile
+      container_name: ${COMPOSE_PROJECT_NAME}_laravel
+      restart: always
+      command: 'php artisan serve --host=0.0.0.0 --port=9171'
+      volumes:
+        - './recipes-service-api:/var/www/html'
+      ports:
+        - '9171:9171'
+      networks:
+        - recipes_network
+
+    recipes_db:
+      image: mysql:5.7
+      container_name: recipes-database
+      restart: unless-stopped
+      environment:
+        MYSQL_DATABASE: recipes_db
+        MYSQL_ROOT_PASSWORD: MyWayisgr8!!@
+        MYSQL_PASSWORD: MyWayisgr8!!@
+        MYSQL_USER: recipes_db_user
+        SERVICE_TAGS: dev
+        SERVICE_NAME: mysql
+      volumes:
+        - ./mysql:/docker-entrypoint-initdb.d
+      networks:
+        - recipes_network
+
+    phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      links:
+        - recipes_db:recipes_db
+      ports:
+        - 8080:80
+      environment:
+        MYSQL_USERNAME: kennel_union_user
+        MYSQL_ROOT_PASSWORD: MyWayisgr8!!@
+        PMA_HOST: kennel_db
+      networks:
+        - recipes_network
+
+
+
+
+networks:
+  recipes_network:
+    name: recipes_network
+

@@ -1,0 +1,19 @@
+$primary-color: #0052cc;
+
+@import "../node_modules/spectre.css/src/spectre.scss";
+
+#app {
+    padding: 1rem;
+}
+
+.card-body {
+    p {
+        margin: 0;
+    }
+}
+
+.card-image {
+    img {
+        width: 100%;
+    }
+}
