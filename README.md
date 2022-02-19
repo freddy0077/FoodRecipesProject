@@ -1,5 +1,3 @@
-# FoodRecipesProject
-
 ## Assignment Details
 ### Web- Filter by Country of origin
 
