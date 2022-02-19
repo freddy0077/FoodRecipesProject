@@ -1,10 +1,16 @@
 import axios from 'axios';
-// import qs from 'qs';
+import qs from 'qs';
 
 const url = process.env.VUE_APP_API_BASE_URL;
 
-function list() {
-  return axios.get(`${url}/api/recipes`)
+function list(params) {
+  const options = {
+    params: params,
+    paramsSerializer: function (params) {
+      return qs.stringify(params, {encode: false});
+    }
+  };
+  return axios.get(`${url}/api/recipes`,options)
     .then(response => {
       return {
         list: (response.data),

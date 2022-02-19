@@ -4,8 +4,9 @@
     <div class="md-layout md-gutter">
       <div class="md-layout-item">
         <md-field>
-          <md-select  name="country" id="country" placeholder="Country">
-            <md-option v-for="country in countries" :value="country.id" :key="country.id">{{country.name}}</md-option>
+          <md-select  name="country" id="country" placeholder="Country" v-model="change">
+            <md-option></md-option>
+            <md-option v-for="country in countries" :value="country.id" :key="country.id" >{{country.name}}</md-option>
           </md-select>
         </md-field>
       </div>
@@ -60,16 +61,17 @@ export default {
     return {
       recipes: [],
       countries: [],
-      page: {
-        page: 1,
-        q: ''
+      country: {
+          co_id: "",
       },
+      countryId: "",
+      change: "",
     };
   },
 
   methods: {
     async getRecipes() {
-      this.recipes = await RecipeService.list().then((response) => {
+      this.recipes = await RecipeService.list(this.country).then((response) => {
         return response.list.data;
       });
     },
@@ -79,6 +81,7 @@ export default {
         return response.list.data;
       });
     },
+
   },
 
   created() {
@@ -88,7 +91,16 @@ export default {
   mounted() {
     this.getRecipes();
     this.getCountries();
+  },
+
+  watch: {
+    change: function(event) {
+      // console.log(event);
+      this.country.co_id = event;
+      this.getRecipes();
+    }
   }
+
 
 };
 

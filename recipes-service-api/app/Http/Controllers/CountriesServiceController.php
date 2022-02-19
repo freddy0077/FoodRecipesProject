@@ -18,7 +18,7 @@ class CountriesServiceController  extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request){
-        $countries = Country::with("recipes")->get();
+        $countries = Country::all();
         return response()->json(["data" => $countries]);
     }
 
