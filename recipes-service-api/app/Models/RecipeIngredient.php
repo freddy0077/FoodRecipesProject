@@ -12,7 +12,7 @@ use Laravel\Scout\Searchable;
 
 class RecipeIngredient extends Model
 {
-    use HasFactory,Searchable,SoftDeletes;
+    use HasFactory;
 
     protected $table = "recipe_ingredients";
 

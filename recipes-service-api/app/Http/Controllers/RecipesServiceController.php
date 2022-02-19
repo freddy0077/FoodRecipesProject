@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Recipe;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 class RecipesServiceController  extends Controller
 {
@@ -13,7 +15,18 @@ class RecipesServiceController  extends Controller
     }
 
     public function index(Request $request){
-        $recipes = Recipe::all();
+
+        $recipesBuilder = DB::table("countries")
+            ->rightJoin("country_recipes","countries.id","=","country_recipes.country_id")
+            ->rightJoin("recipes","recipes.id","=","country_recipes.recipe_id")
+            ->selectRaw("countries.name as country,recipes.name as recipe_name, image_url,
+            countries.id as country_id, recipes.id as recipe_id, description");
+
+            if($request->has("country_id")){
+                $recipesBuilder->where("countries.id","=",$request->query("country_id"));
+            }
+
+            $recipes = $recipesBuilder->get();
         return response()->json(["data" => $recipes]);
     }
 

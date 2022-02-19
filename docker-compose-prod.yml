@@ -43,6 +43,20 @@ services:
       networks:
         - recipes_network
 
+    phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      links:
+        - recipes_db:recipes_db
+      ports:
+        - 8080:80
+      environment:
+        MYSQL_USERNAME: recipes_db_user
+        MYSQL_ROOT_PASSWORD: MyWayisgr8!!@
+        PMA_HOST: recipes_db
+      networks:
+        - recipes_network
+
+
 
 networks:
   recipes_network:

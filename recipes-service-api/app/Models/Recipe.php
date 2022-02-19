@@ -2,12 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Laravel\Lumen\Auth\Authorizable;
-use Laravel\Scout\Searchable;
+
 
 
 class Recipe extends Model
@@ -23,5 +20,7 @@ class Recipe extends Model
         'created_at' => 'datetime:Y-m-d h:i',
     ];
 
+    public function countries(){
+    }
 
 }

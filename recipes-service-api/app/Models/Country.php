@@ -18,5 +18,9 @@ class Country extends Model
 
     protected $guarded = [];
 
+    public function recipes(){
+        return $this->belongsToMany(Recipe::class);
+    }
+
 
 }

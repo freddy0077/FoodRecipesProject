@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Country;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class CountriesServiceController  extends Controller
 {
@@ -12,13 +13,12 @@ class CountriesServiceController  extends Controller
     {
     }
 
-
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request){
-        $countries = Country::all();
+        $countries = Country::with("recipes")->get();
         return response()->json(["data" => $countries]);
     }
 
