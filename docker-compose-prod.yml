@@ -56,8 +56,6 @@ services:
       networks:
         - recipes_network
 
-
-
 networks:
   recipes_network:
     name: recipes_network
