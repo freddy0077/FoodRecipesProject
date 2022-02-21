@@ -1,7 +1,8 @@
 import axios from 'axios';
 // import qs from 'qs';
 
-const url = process.env.VUE_APP_API_BASE_URL;
+// const url = process.env.VUE_APP_API_BASE_URL;
+const url = '34.251.55.9:9171';
 
 function list() {
   return axios.get(`${url}/api/countries`)
